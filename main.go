@@ -31,17 +31,20 @@ func main() {
 	input := args[1]
 
 	inputSlice := strings.Split(input, "\\n")
-	fmt.Println(len(inputSlice))
+	// fmt.Println(len(inputSlice))
 
+	// fmt.Println(inputSlice[1] == "")
 	// if strings.Contains(input, "\n") {
 	// }
 
 	for j := 0; j < len(inputSlice); j++ {
+		if inputSlice[j] == "" && j != len(inputSlice)-1 {
+			fmt.Println()
+		}
+
 		for i := 0; i < 8; i++ {
 			for k, r := range inputSlice[j] {
-				if inputSlice[j] == "\n" {
-					fmt.Print("\n")
-				}
+				// fmt.Print(string(r))
 
 				print := ((int(r) - 32) * 9) + i + 1
 				fmt.Print(stringSlice[print])
