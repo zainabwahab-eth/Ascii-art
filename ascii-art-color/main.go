@@ -1,40 +1,45 @@
 package main
 
 import (
+	"ascii-art-color/operations"
 	"fmt"
-	"os"
-	"strings"
+	// "strings"
 )
 
 func main() {
 
-	//go run . --color=red kit "a king kitten have kit"
+	ok, input := operations.ValidateInput()
 
-	data, err := os.ReadFile("../ascii-art/standard.txt")
-	if err != nil {
-		fmt.Println("Error", err)
+	if !ok {
+		fmt.Println("Usage: go run . [OPTION] [STRING]")
+		return
 	}
-	stringSlice := strings.Split(string(data), "\n")
-	args := os.Args
-	input := args[1]
 
-	fmt.Println(strings.HasPrefix("---color=red", "--"))
-	inputSlice := strings.Split(input, "\\n")
-	for j := 0; j < len(inputSlice); j++ {
-		if inputSlice[j] == "" && j != len(inputSlice)-1 {
-			fmt.Println()
-		}
-		for i := 0; i < 8; i++ {
-			for k, r := range inputSlice[j] {
-				// fmt.Print(string(r))
-				print := ((int(r) - 32) * 9) + i + 1
-				fmt.Print(stringSlice[print])
-				if k == len(inputSlice[j])-1 {
-					fmt.Print("\n")
-				}
-				// fmt.Print(k)
-			}
-		}
-
+	//Check if there is no input at all eg when len(args) != 2
+	if len(input.Str) == 0 {
+		return
 	}
+
+	//check if there is only "" in string
+	if input.Str[0] == "" && len(input.Str) == 1 {
+		return
+	}
+
+	// //check if input only contain new line ie; "\n"
+	if input.Str[0] == "\n" && len(input.Str) == 1 {
+		fmt.Println()
+		return
+	}
+
+	data := operations.ReadTextFile("standard.txt")
+
+	//Check if there is no input at all eg when len(args) != 2 or when there is an
+	//error in ReadFile
+	if len(input.Str) == 0 || len(data) == 0 {
+		return
+	}
+	// inputSlice := strings.Split(input, "\\n")
+	result := operations.AsciiArt(input, data)
+
+	fmt.Print(result)
 }
