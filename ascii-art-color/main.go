@@ -3,7 +3,6 @@ package main
 import (
 	"ascii-art-color/operations"
 	"fmt"
-	// "strings"
 )
 
 func main() {

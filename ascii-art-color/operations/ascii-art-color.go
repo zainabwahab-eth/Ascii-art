@@ -50,21 +50,26 @@ func ReadTextFile(file string) []string {
 	return dataSlice
 }
 
+func GetColorCode(input string) string {
+	colorMap := map[string]string{
+		"reset":   "\033[0m",
+		"red":     "\033[31m",
+		"green":   "\033[32m",
+		"blue":    "\033[34m",
+		"yellow":  "\033[33m",
+		"magenta": "\033[35m",
+		"cyan":    "\033[36m",
+		"orange":  "\033[38;2;255;165;0m",
+	}
+	return colorMap[input]
+}
+
 func AsciiArt(inputs Inputs, dataSlice []string) string {
-
-	colors := make(map[string]string)
-
-	colors["red"] = "\033[31m"
-	colors["green"] = "\033[32m"
-	colors["yellow"] = "\033[33m"
-	colors["blue"] = "\033[34m"
-	colors["cyan"] = "\033[36m"
-	colors["reset"] = "\033[0m"
-
 	var builder strings.Builder
 	inputSlice := inputs.Str
 	subString := inputs.SubString
-	colorInput := inputs.Color
+	colorCode := GetColorCode(inputs.Color)
+	resetCode := GetColorCode("reset")
 
 	//Loop through input array
 	for _, input := range inputSlice {
@@ -87,11 +92,11 @@ func AsciiArt(inputs Inputs, dataSlice []string) string {
 				if subString != "" {
 					ok, c = CheckColor(input, subString)
 				} else {
-					builder.WriteString(colors[colorInput])
+					builder.WriteString(colorCode)
 				}
 
 				if ok && slices.Contains(c.Start, i) {
-					builder.WriteString(colors[colorInput])
+					builder.WriteString(colorCode)
 				}
 
 				//Make sure ch is printable
@@ -105,7 +110,7 @@ func AsciiArt(inputs Inputs, dataSlice []string) string {
 				}
 
 				if ok && slices.Contains(c.End, i) {
-					builder.WriteString(colors["reset"])
+					builder.WriteString(resetCode)
 				}
 
 			}
