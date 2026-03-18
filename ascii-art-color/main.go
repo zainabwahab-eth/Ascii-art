@@ -11,7 +11,6 @@ func main() {
 	ok, input := operations.ValidateInput()
 
 	if !ok {
-		fmt.Println("Usage: go run . [OPTION] [STRING]")
 		return
 	}
 

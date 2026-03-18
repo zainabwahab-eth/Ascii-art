@@ -28,7 +28,7 @@ func ValidateInput() (bool, Inputs) {
 
 	//if color is specified check inputs
 	if (*color != "") && (len(args) != 1 && len(args) != 2) {
-		fmt.Println("Usage: go run . [OPTION] [STRING]1")
+		fmt.Println("Usage: go run . [OPTION] [STRING]")
 		return false, Inputs{}
 	}
 
