@@ -25,7 +25,7 @@ func CheckColor(input string, subString string) (bool, ColorStruct) {
 	for in >= 0 {
 		start = append(start, in)
 		end = append(end, in+len(subString)-1)
-		input = input[:in+len(subString)-1]
+		input = input[:in]
 		in = strings.LastIndex(input, subString)
 	}
 	return true, ColorStruct{
@@ -117,6 +117,7 @@ func AsciiArt(inputs Inputs, dataSlice []string) string {
 			builder.WriteString("\n")
 		}
 	}
+	builder.WriteString(resetCode)
 
 	return builder.String()
 

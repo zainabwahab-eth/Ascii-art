@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"slices"
+
+	// "slices"
 	"strings"
 )
 
@@ -41,7 +43,7 @@ func ValidateInput() (bool, Inputs) {
 
 	acceptedColors := []string{"red", "blue", "yellow", "green", "magenta", "cyan", "orange"}
 
-	if !slices.Contains(acceptedColors, strings.ToLower(*color)) {
+	if *color != "" && !slices.Contains(acceptedColors, strings.ToLower(*color)) {
 		fmt.Println(*color + ` not available, please try red, blue, yellow, green, magenta, cyan, orange`)
 		return false, Inputs{}
 	}
