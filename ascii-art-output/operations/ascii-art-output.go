@@ -45,8 +45,10 @@ func ReadTextFile(file string) (error, []string) {
 		return err, []string{}
 	}
 
+	cleanStr := strings.ReplaceAll(string(data), "\r", "")
+
 	//Split data by new line
-	dataSlice := strings.Split(string(data), "\n")
+	dataSlice := strings.Split(cleanStr, "\n")
 
 	return nil, dataSlice
 }

@@ -174,7 +174,7 @@ func ValidateInput() (bool, Inputs) {
 		inputs = ParseColorFlag(*color)
 
 	case *output != "":
-		inputs = ParseColorFlag(*output)
+		inputs = ParseOutputFlag(*output)
 
 	}
 
