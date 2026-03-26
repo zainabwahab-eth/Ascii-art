@@ -23,7 +23,12 @@ func main() {
 		return
 	}
 
-	// //check if input only contain new line ie; "\n"
+	// //check if 
+	if !ok {
+		return
+	}
+
+	//Check if therinput only contain new line ie; "\n"
 	if input.Str[0] == "\n" && len(input.Str) == 1 {
 		fmt.Println()
 		return

@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"slices"
-
-	// "slices"
 	"strings"
 )
 
@@ -14,6 +12,17 @@ type Inputs struct {
 	Str       []string
 	SubString string
 	Color     string
+}
+
+func isValidColor(color string) bool {
+	if strings.HasPrefix(color, "#") && len(color) == 7 {
+		return true
+	}
+	if strings.HasPrefix(color, "rgb(") && strings.HasSuffix(color, ")") {
+		return true
+	}
+	namedColors := []string{"red", "blue", "yellow", "green", "magenta", "cyan", "orange"}
+	return slices.Contains(namedColors, color)
 }
 
 func ValidateInput() (bool, Inputs) {
@@ -41,10 +50,8 @@ func ValidateInput() (bool, Inputs) {
 		return false, Inputs{}
 	}
 
-	acceptedColors := []string{"red", "blue", "yellow", "green", "magenta", "cyan", "orange"}
-
-	if *color != "" && !slices.Contains(acceptedColors, strings.ToLower(*color)) {
-		fmt.Println(*color + ` not available, please try red, blue, yellow, green, magenta, cyan, orange`)
+	if *color != "" && !isValidColor(strings.ToLower(*color)) {
+		fmt.Println("Invalid color format. Use named colors, #hex, or rgb(r,g,b)")
 		return false, Inputs{}
 	}
 
@@ -63,6 +70,6 @@ func ValidateInput() (bool, Inputs) {
 	return true, Inputs{
 		Str:       strSlice,
 		SubString: subString,
-		Color:     strings.ToLower(*color),
+		Color:     *color,
 	}
 }

@@ -11,7 +11,7 @@ go run . --color="your specified color" "your substring to be colored" "your tex
 ## Examples
 
 ```bash
-go run . --color="red" "world" "Helloworld"
+go run . --color="rgb(255,0,0)" "world" "Helloworld" #supports rgb and hex
 go run . --color="yellow" "Hello\nWorld" # no substring specified so all text will be colored yellow
 go run . "" # empty string
 ```
@@ -19,8 +19,9 @@ go run . "" # empty string
 ## Features
 
 - Supports uppercase and lowercase letters
+- Supports Hex and RGB colors codes.
+- If named color is used it supports red, green, yellow, blue, cyan, magenta and orange
 - Supports uppercase and lowercase colors
-- Supports the following colors; red, green, yellow, cyan, blue
 - Supports numbers and special characters
 - Supports spaces
 - Supports \n for newlines in input
