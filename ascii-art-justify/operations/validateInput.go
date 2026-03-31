@@ -125,7 +125,7 @@ func ParseAlignFlag(align string) Inputs {
 	return Inputs{
 		Str:       str,
 		Banner:    banner,
-		Alignment: align,
+		Alignment: strings.ToLower(align),
 	}
 }
 
@@ -194,9 +194,6 @@ func ValidateInput() (bool, Inputs) {
 	color := flag.String("color", "", "color to use")
 	align := flag.String("align", "", "Text alignment")
 	flag.Parse()
-	fmt.Println(*align)
-	// fmt.Println(*color)
-	fmt.Println("hel")
 
 	switch {
 	case *color == "" && *output == "" && *align == "":
@@ -212,7 +209,6 @@ func ValidateInput() (bool, Inputs) {
 		inputs = ParseOutputFlag(*output)
 
 	case *align != "":
-		fmt.Println("hello")
 		inputs = ParseAlignFlag(*align)
 	}
 

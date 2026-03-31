@@ -38,35 +38,67 @@ func terminalWidth() (int, error) {
 	return int(w.Col), nil
 }
 
-func printString(align string, resultSlice [][]string, width int) {
+func printString(align string, resultSlice [][]string, totalWidth int, widthMap map[string]int) {
 	terminalWidth, err := terminalWidth()
 	if err != nil {
 		return
 	}
 
-	padding := terminalWidth - width
-	fmt.Println(len(resultSlice))
+	padding := terminalWidth - totalWidth
+	fmt.Println("terminal", terminalWidth)
+	fmt.Println("totalwidth", totalWidth)
 
-	if align == "right" {
-		for _, s := range resultSlice {
-			fmt.Print(strings.Repeat(" ", padding) + strings.Join(s, ""))
-		}
-	} else if align == "center" {
-		fmt.Println("Hello")
-		for _, s := range resultSlice {
-			fmt.Print(strings.Repeat(" ", padding/2) + strings.Join(s, ""))
-		}
-	} else if align == "justify" {
-		fmt.Println()
-		for _, s := range resultSlice {
-			fmt.Print(strings.Join(s, ""))
+	switch align {
+	case "right":
+		for i := 0; i < 8; i++ {
+			fmt.Print(strings.Repeat(" ", padding))
+			for _, str := range resultSlice {
+				fmt.Print(str[i])
+			}
+			fmt.Println()
 		}
 
-	} else {
-		for _, s := range resultSlice {
-			fmt.Print(strings.Join(s, ""))
+	case "centre":
+		for i := 0; i < 8; i++ {
+			fmt.Print(strings.Repeat(" ", padding/2))
+			for _, str := range resultSlice {
+				fmt.Print(str[i])
+			}
+			fmt.Println()
+		}
+
+	case "justify":
+		if len(resultSlice) == 1 {
+			for i := 0; i < 8; i++ {
+				for _, str := range resultSlice {
+					fmt.Print(str[i])
+				}
+				fmt.Println()
+			}
+		} else {
+			indPadding := padding / (len(resultSlice) - 1)
+			fmt.Println("inpadding", indPadding)
+			fmt.Println("padding", padding)
+			for i := 0; i < 8; i++ {
+				for j, str := range resultSlice {
+					if j != len(resultSlice)-1 {
+						fmt.Print(str[i] + strings.Repeat(" ", indPadding))
+					} else {
+						fmt.Print(str[i])
+					}
+				}
+				fmt.Println()
+			}
+		}
+	default:
+		for i := 0; i < 8; i++ {
+			for _, str := range resultSlice {
+				fmt.Print(str[i])
+			}
+			fmt.Println()
 		}
 	}
+
 }
 
 func main() {
@@ -110,28 +142,25 @@ func main() {
 		return
 	}
 
-	// inputSlice := strings.Split(input, "\\n")
-	resultSlice, width := operations.AsciiArt(input, data)
-	fmt.Println(input.Alignment)
-	printString(input.Alignment, resultSlice, width)
-	// var builder strings.Builder
-	// for _, s := range resultSlice {
-	// 	fmt.Print(strings.Repeat(" ", terminalWidth-width) + strings.Join(s, ""))
-	// }
+	inputSlice := strings.Split(input.Str, " ")
 
-	// if input.Alignment == "right" {
-	// 	for _, s := range resultSlice {
-	// 		builder.WriteString(strings.Repeat(" ", terminalWidth-width) + s)
-	// 	}
-	// }
-	// fmt.Print(builder.String())
+	
+	s := []string{}
+	resultSlice := [][]string{}
+	widthMap := make(map[string]int)
+	w := 0
+	totalWidth := 0
+	for i, word := range inputSlice {
+		if i != len(inputSlice)-1 {
+			word = word + " "
+		}
+		s, w = operations.AsciiArt(input, word, data)
+		widthMap[word] = w
+		totalWidth += w
+		resultSlice = append(resultSlice, s)
+	}
+	// fmt.Println("widthmap", totalWidth)
+	// fmt.Print(resultSlice)
+	printString(input.Alignment, resultSlice, totalWidth, widthMap)
 
-	// if input.Output == "" {
-	// 	fmt.Print(result)
-	// 	// fmt.Println(len(input.Str))
-	// 	fmt.Println(width, terminalWidth)
-	// 	// fmt.Print(strings.Repeat(" ", terminalWidth-width) + result)
-	// } else {
-	// 	operations.WriteFile(result, input.Output)
-	// }
 }
