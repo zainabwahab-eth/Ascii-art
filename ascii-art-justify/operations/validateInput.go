@@ -114,6 +114,13 @@ func ParseAlignFlag(align string) Inputs {
 		return Inputs{}
 	}
 
+	acceptedAlignment := []string{"left", "centre", "right", "justify"}
+
+	if align != "" && !slices.Contains(acceptedAlignment, strings.ToLower(align)) {
+		fmt.Println(align + ` not available, please try left, right, centre, justify`)
+		return Inputs{}
+	}
+
 	str := args[0]
 	banner := "standard"
 	if len(args) > 1 {
