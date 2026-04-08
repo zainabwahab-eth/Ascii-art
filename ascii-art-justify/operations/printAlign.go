@@ -38,8 +38,8 @@ func TerminalWidth() (int, error) {
 	return int(w.Col), nil
 }
 
-func PerformAscii(input Inputs, dataSlice []string) ([][]string, int) {
-	inputSlice := strings.Split(input.Str, " ")
+func PerformAscii(str string, input Inputs, dataSlice []string) ([][]string, int) {
+	inputSlice := strings.Split(str, " ")
 
 	s := []string{}
 	resultSlice := [][]string{}
@@ -116,9 +116,12 @@ func PrintDefault(resultSlice [][]string) string {
 }
 
 func WriteFile(data string, submFile string) {
-	dataByte := []byte(data)
-	err := os.WriteFile(submFile, dataByte, 0644)
+	f, err := os.OpenFile(submFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Println("Error writing file", err)
+		fmt.Println("Error opening file", err)
+		return
 	}
+	defer f.Close()
+	f.WriteString(data)
+
 }

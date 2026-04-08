@@ -11,7 +11,7 @@ type ColorStruct struct {
 	End   []int
 }
 
-func CheckColor(input string, subString string) (bool, ColorStruct) {
+func CheckColorString(input string, subString string) (bool, ColorStruct) {
 	count := strings.Count(input, subString)
 	start := []int{}
 	end := []int{}
@@ -76,14 +76,6 @@ func AsciiArt(inputs Inputs, word string, dataSlice []string) ([]string, int) {
 	colorCode := GetColorCode(inputs.Color)
 	resetCode := GetColorCode("reset")
 
-	// //Loop through input array
-	// for _, input := range inputSlice {
-
-	// 	if input == "" {
-	// 		builder.WriteString("\n")
-	// 		continue
-	// 	}
-
 	//Loop 8 times to print all rowa of input
 	for row := 1; row <= 8; row++ {
 		builder = ""
@@ -96,15 +88,13 @@ func AsciiArt(inputs Inputs, word string, dataSlice []string) ([]string, int) {
 			var c ColorStruct
 
 			if subString != "" {
-				ok, c = CheckColor(input, subString)
+				ok, c = CheckColorString(input, subString)
 			} else {
 				builder += colorCode
-				// builder.WriteString(colorCode)
 			}
 
 			if ok && slices.Contains(c.Start, i) {
 				builder += colorCode
-				// builder.WriteString(colorCode)
 			}
 
 			//Make sure ch is printable
@@ -115,7 +105,6 @@ func AsciiArt(inputs Inputs, word string, dataSlice []string) ([]string, int) {
 
 				//Store string in buffer
 				builder += dataSlice[print]
-				// builder.WriteString(dataSlice[print])
 				if row == 8 {
 					artWidth += len(dataSlice[print])
 				}
@@ -123,17 +112,16 @@ func AsciiArt(inputs Inputs, word string, dataSlice []string) ([]string, int) {
 
 			if ok && slices.Contains(c.End, i) {
 				builder += resetCode
-				// builder.WriteString(resetCode)
 			}
 
 		}
+
+		if inputs.Color != "" && subString == "" {
+			builder += resetCode
+		}
+
 		resSlice = append(resSlice, builder)
-		// builder.WriteString("\n")
+
 	}
-	// builder.WriteString(resetCode)
-	// }
 	return resSlice, artWidth
-
-	// return builder.String()
-
 }

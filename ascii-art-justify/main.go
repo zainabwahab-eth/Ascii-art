@@ -25,10 +25,12 @@ func printString(align string, resultSlice [][]string, totalWidth int, output st
 
 	default:
 		result := operations.PrintDefault(resultSlice)
+		// fmt.Println("res", result)
 
 		if output == "" {
 			fmt.Print(result)
 		} else {
+			// printRes := result
 			operations.WriteFile(result, output)
 		}
 	}
@@ -76,7 +78,10 @@ func main() {
 		return
 	}
 
-	resultSlice, totalWidth := operations.PerformAscii(input, data)
-	printString(input.Alignment, resultSlice, totalWidth, input.Output)
+	//loop through string gotten from spliting by "\n"
+	for _, s := range strSlice {
+		resultSlice, totalWidth := operations.PerformAscii(s, input, data)
+		printString(input.Alignment, resultSlice, totalWidth, input.Output)
+	}
 
 }
