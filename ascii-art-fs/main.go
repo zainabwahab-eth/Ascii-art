@@ -3,6 +3,7 @@ package main
 import (
 	"ascii-art-fs/operations"
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 
 	banner := "standard.txt"
 	if input.Banner != "" {
-		banner = input.Banner + ".txt"
+		banner = strings.ToLower(input.Banner) + ".txt"
 	}
 	err, data := operations.ReadTextFile(banner)
 
