@@ -17,8 +17,8 @@ func printString(align string, resultSlice [][]string, totalWidth int, output st
 	case "right":
 		operations.PrintRight(resultSlice, padding)
 
-	case "centre":
-		operations.PrintCentre(resultSlice, padding)
+	case "center":
+		operations.PrintCenter(resultSlice, padding)
 
 	case "justify":
 		operations.PrintJustify(resultSlice, padding)
@@ -64,7 +64,7 @@ func main() {
 
 	banner := "standard.txt"
 	if input.Banner != "" {
-		banner = input.Banner + ".txt"
+		banner = strings.ToLower(input.Banner) + ".txt"
 	}
 	err, data := operations.ReadTextFile(banner)
 

@@ -70,7 +70,7 @@ func PrintRight(resultSlice [][]string, padding int) {
 	}
 }
 
-func PrintCentre(resultSlice [][]string, padding int) {
+func PrintCenter(resultSlice [][]string, padding int) {
 	for i := 0; i < 8; i++ {
 		fmt.Print(strings.Repeat(" ", padding/2))
 		for _, str := range resultSlice {
